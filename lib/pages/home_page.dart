@@ -34,12 +34,19 @@ class HomePage extends StatelessWidget {
                     width: 140,
                     child: Card(
                       margin: EdgeInsets.zero,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Center(
-                          child: Text(
-                            e.label,
-                            textAlign: TextAlign.center,
+                      clipBehavior: Clip.antiAlias,
+                      child: InkWell(
+                        onTap: () async {
+                          await Navigator.of(context)
+                              .pushReplacementNamed(e.route);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Center(
+                            child: Text(
+                              e.label,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),

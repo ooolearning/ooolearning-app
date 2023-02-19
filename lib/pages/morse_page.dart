@@ -2,7 +2,6 @@ import 'package:dyn_mouse_scroll/dyn_mouse_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:ooolearning_app/models/flash_card_option.dart';
 import 'package:ooolearning_app/modules/flash_cards_module.dart';
-import 'package:ooolearning_app/utils/constants.dart';
 import 'package:ooolearning_app/widgets/base_page.dart';
 
 class MorsePage extends StatelessWidget {
@@ -68,7 +67,7 @@ class MorsePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: const [
-                            Text('Welcome to ${Constants.appName}!'),
+                            Text('Learn morse code!'),
                           ],
                         ),
                       ),
