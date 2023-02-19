@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooolearning_app/pages/home_page.dart';
+import 'package:ooolearning_app/pages/morse_page.dart';
 import 'package:ooolearning_app/utils/constants.dart';
 
 class App extends StatelessWidget {
@@ -15,7 +16,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (context) => const HomePage(),
+        HomePage.route: (context) => const HomePage(),
+        MorsePage.route: (context) => const MorsePage(),
       },
     );
   }

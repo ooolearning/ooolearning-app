@@ -3,18 +3,6 @@ import 'package:ooolearning_app/pages/home_page.dart';
 import 'package:ooolearning_app/utils/constants.dart';
 import 'package:ooolearning_app/widgets/app_title.dart';
 
-class MenuOption {
-  const MenuOption({
-    required this.isEnabled,
-    required this.label,
-    required this.route,
-  });
-
-  final bool isEnabled;
-  final String label;
-  final String route;
-}
-
 class BasePage extends StatelessWidget {
   const BasePage({
     super.key,
@@ -22,29 +10,6 @@ class BasePage extends StatelessWidget {
   });
 
   final Widget child;
-
-  final _menuOptions = const <MenuOption>[
-    MenuOption(
-      label: 'Binary (soon)',
-      route: HomePage.route,
-      isEnabled: false,
-    ),
-    MenuOption(
-      label: 'Japanese (soon)',
-      route: HomePage.route,
-      isEnabled: false,
-    ),
-    MenuOption(
-      label: 'Morse (soon)',
-      route: HomePage.route,
-      isEnabled: false,
-    ),
-    MenuOption(
-      label: 'Russian (soon)',
-      route: HomePage.route,
-      isEnabled: false,
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +35,7 @@ class BasePage extends StatelessWidget {
                 },
               ),
               const Divider(height: 0),
-              ..._menuOptions.map((e) {
+              ...Constants.menuOptions.map((e) {
                 return ListTile(
                   title: Text(e.label),
                   enabled: e.isEnabled,
