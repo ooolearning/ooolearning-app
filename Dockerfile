@@ -2,7 +2,7 @@ FROM ubuntu:20.04 as builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y curl git wget unzip libgconf-2-4 gdb libstdc++6 libglu1-mesa fonts-droid-fallback python3
+RUN apt-get update && apt-get install -y curl git wget unzip fonts-droid-fallback python3
 RUN apt-get clean
 
 RUN apt-get update && apt-get install -y build-essential
@@ -12,13 +12,14 @@ RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
-RUN flutter channel master
-RUN flutter upgrade
-RUN flutter config --enable-web
-
-RUN flutter pub cache repair
-
 WORKDIR /usr/local/flutter
+
+RUN flutter channel master
+
+# RUN flutter upgrade
+RUN git checkout f9972818f4e8bf464b378f0942a153fa391a0b7a
+
+RUN flutter config --enable-web
 
 WORKDIR /app
 
