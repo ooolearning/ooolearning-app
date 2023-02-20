@@ -1,19 +1,21 @@
-FROM dart:2.19.1 as builder
+FROM ubuntu:20.04 as builder
 
-RUN apt-get update && apt-get install -y unzip wget xz-utils
+ARG DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /usr
+RUN apt-get update && apt-get install -y curl git wget unzip libgconf-2-4 gdb libstdc++6 libglu1-mesa fonts-droid-fallback lib32stdc++6 python3
+RUN apt-get clean
 
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
-ENV PATH "$PATH:/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin"
 
+ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
+
+RUN flutter channel master
 RUN flutter upgrade
+RUN flutter config --enable-web
 
-# Install webdev
-RUN flutter pub global activate webdev
+RUN flutter pub cache repair
 
-# Set the PATH environment variable for the webdev executable
-ENV PATH "$PATH:/root/.pub-cache/bin"
+WORKDIR /usr/local/flutter
 
 WORKDIR /app
 
