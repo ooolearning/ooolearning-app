@@ -1,6 +1,4 @@
-ARG ARCH=linux/arm64
-
-FROM --platform=${ARCH} dart:2.19.1 as builder
+FROM dart:2.19.1 as builder
 
 RUN apt-get update && apt-get install -y unzip wget xz-utils
 
@@ -8,6 +6,8 @@ WORKDIR /usr
 
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 ENV PATH "$PATH:/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin"
+
+RUN flutter upgrade
 
 # Install webdev
 RUN flutter pub global activate webdev
