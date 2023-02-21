@@ -29,8 +29,10 @@ class App extends StatelessWidget {
               ),
               darkTheme: ThemeData(
                 fontFamily: 'Poppins',
-                brightness: Brightness.dark,
-                primarySwatch: Colors.blue,
+                colorScheme: ColorScheme.fromSwatch(
+                  brightness: Brightness.dark,
+                  primarySwatch: Colors.blue,
+                ).copyWith(secondary: Colors.blueAccent),
               ),
               routes: {
                 // Home page.

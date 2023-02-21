@@ -25,6 +25,10 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   FlashCardOption? _currentCard;
   FlashCardOptionSet? _currentSet;
 
+  bool _doShowTips = true;
+
+  bool _isTipShown = false;
+
   final _random = Random();
 
   final _cardQueue = ListQueue<FlashCardOption>();
@@ -47,46 +51,75 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   Widget _getConfigCard() {
     return Card(
       margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text('Current set'),
-            const SizedBox(height: 16),
-            ...widget.flashCardOptionSets.asMap().map((key, value) {
-              Widget wrapper({
-                required Widget child,
-                required bool padded,
-              }) {
-                if (padded) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: child,
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 16),
+                const Text('Current set'),
+                const SizedBox(height: 16),
+                ...widget.flashCardOptionSets.asMap().map((key, value) {
+                  Widget wrapper({
+                    required Widget child,
+                    required bool padded,
+                  }) {
+                    if (padded) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: child,
+                      );
+                    }
+
+                    return child;
+                  }
+
+                  Widget child = OutlinedButton(
+                    onPressed: () {
+                      _setSet(value);
+                    },
+                    child: Text(value.label),
                   );
+
+                  if (value.label == _currentSet?.label) {
+                    child = ElevatedButton(
+                      onPressed: null,
+                      child: Text('${value.label} (selected)'),
+                    );
+                  }
+
+                  return MapEntry(key, wrapper(child: child, padded: key != 0));
+                }).values,
+                const SizedBox(height: 16),
+              ],
+            ),
+          ),
+          const Divider(height: 0),
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text('Options'),
+          ),
+          CheckboxListTile(
+              value: _doShowTips,
+              title: const Text('Show tips'),
+              onChanged: (value) {
+                if (value == null) {
+                  return;
                 }
 
-                return child;
-              }
+                setState(() {
+                  _doShowTips = value;
+                });
 
-              Widget child = OutlinedButton(
-                onPressed: () {
-                  _setSet(value);
-                },
-                child: Text(value.label),
-              );
-
-              if (value.label == _currentSet?.label) {
-                child = ElevatedButton(
-                  onPressed: null,
-                  child: Text('${value.label} (selected)'),
-                );
-              }
-
-              return MapEntry(key, wrapper(child: child, padded: key != 0));
-            }).values,
-          ],
-        ),
+                if (value == false) {
+                  _hideTip();
+                }
+              }),
+        ],
       ),
     );
   }
@@ -162,6 +195,13 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                   ),
                 ),
               ),
+              if (_isTipShown) ...[
+                const SizedBox(width: 16),
+                Text(
+                  'Correct answer: ${(_currentCard?.answers ?? []).join(', ')}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ],
           ),
         ),
@@ -274,6 +314,12 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
     );
   }
 
+  void _hideTip() {
+    setState(() {
+      _isTipShown = false;
+    });
+  }
+
   void _nextFlashCard() {
     final newFlashCard = _cardQueue.removeFirst();
 
@@ -308,6 +354,12 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
     _nextFlashCard();
   }
 
+  void _showTip() {
+    setState(() {
+      _isTipShown = true;
+    });
+  }
+
   void _validate() {
     if (_controller.text.isEmpty) {
       _controller.clear();
@@ -326,6 +378,8 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
         _stats.totalAnswers++;
         _stats.correctAnswers++;
       });
+
+      _hideTip();
     } else {
       _wrongAudioPlayer.seek(Duration.zero);
       _wrongAudioPlayer.resume();
@@ -334,6 +388,8 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
         _stats.totalAnswers++;
         _stats.wrongAnswers++;
       });
+
+      _showTip();
     }
 
     _controller.clear();
