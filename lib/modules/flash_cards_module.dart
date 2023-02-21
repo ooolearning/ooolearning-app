@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:ooolearning_app/models/flash_card_option.dart';
+import 'package:ooolearning_app/models/flash_card_option_set.dart';
 import 'package:ooolearning_app/models/flash_cards_stats.dart';
 import 'package:ooolearning_app/utils/assets.dart';
 import 'package:ooolearning_app/widgets/layout_wrapper.dart';
@@ -11,21 +12,22 @@ import 'package:ooolearning_app/widgets/layout_wrapper.dart';
 class FlashCardsModule extends StatefulWidget {
   const FlashCardsModule({
     super.key,
-    required this.flashCardOptions,
+    required this.flashCardOptionSets,
   });
 
-  final List<FlashCardOption> flashCardOptions;
+  final List<FlashCardOptionSet> flashCardOptionSets;
 
   @override
   State<FlashCardsModule> createState() => _FlashCardsModuleState();
 }
 
 class _FlashCardsModuleState extends State<FlashCardsModule> {
-  FlashCardOption? _current;
+  FlashCardOption? _currentCard;
+  FlashCardOptionSet? _currentSet;
 
   final _random = Random();
 
-  final _queue = ListQueue<FlashCardOption>();
+  final _cardQueue = ListQueue<FlashCardOption>();
 
   final _stats = FlashCardsStats(
     totalAnswers: 0,
@@ -41,6 +43,53 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   final _controller = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  Widget _getConfigCard() {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text('Current set'),
+            const SizedBox(height: 16),
+            ...widget.flashCardOptionSets.asMap().map((key, value) {
+              Widget wrapper({
+                required Widget child,
+                required bool padded,
+              }) {
+                if (padded) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: child,
+                  );
+                }
+
+                return child;
+              }
+
+              Widget child = OutlinedButton(
+                onPressed: () {
+                  _setSet(value);
+                },
+                child: Text(value.label),
+              );
+
+              if (value.label == _currentSet?.label) {
+                child = ElevatedButton(
+                  onPressed: null,
+                  child: Text(value.label),
+                );
+              }
+
+              return MapEntry(key, wrapper(child: child, padded: key != 0));
+            }).values,
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _getControlsCard() {
     return Card(
@@ -92,7 +141,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                             validator: (value) {
                               value ??= '';
 
-                              if (value.toLowerCase() != _current?.answer) {
+                              if (value.toLowerCase() != _currentCard?.answer) {
                                 return 'Try again!';
                               }
 
@@ -129,7 +178,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
             Expanded(
               child: Center(
                 child: Text(
-                  _current?.label ?? '',
+                  _currentCard?.label ?? '',
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
@@ -140,7 +189,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
             ),
             const SizedBox(height: 16),
             Row(
-              children: _queue
+              children: _cardQueue
                   .toList()
                   .asMap()
                   .map((key, value) {
@@ -219,18 +268,37 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   }
 
   void _nextFlashCard() {
-    final newFlashCard = _queue.removeFirst();
+    final newFlashCard = _cardQueue.removeFirst();
 
-    _queue.addLast(_pickRandomFlashCard());
+    _cardQueue.addLast(_pickRandomFlashCard());
 
     setState(() {
-      _current = newFlashCard;
+      _currentCard = newFlashCard;
     });
   }
 
   FlashCardOption _pickRandomFlashCard() {
-    return widget.flashCardOptions
-        .elementAt(_random.nextInt(widget.flashCardOptions.length));
+    final options = _currentSet?.flashCardOptions ?? [];
+
+    return options.elementAt(_random.nextInt(options.length));
+  }
+
+  void _setSet(FlashCardOptionSet set) {
+    setState(() {
+      _currentSet = set;
+    });
+
+    _cardQueue.clear();
+
+    _cardQueue.addAll([
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+    ]);
+
+    _nextFlashCard();
   }
 
   void _validate() {
@@ -269,15 +337,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   void initState() {
     super.initState();
 
-    _queue.addAll([
-      _pickRandomFlashCard(),
-      _pickRandomFlashCard(),
-      _pickRandomFlashCard(),
-      _pickRandomFlashCard(),
-      _pickRandomFlashCard(),
-    ]);
-
-    _nextFlashCard();
+    _setSet(widget.flashCardOptionSets.first);
 
     Future(() async {
       await Future.wait(
@@ -360,10 +420,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                   const SizedBox(width: 16),
                   Expanded(
                     flex: 2,
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      child: Container(),
-                    ),
+                    child: _getConfigCard(),
                   ),
                 ],
               ),
@@ -371,7 +428,14 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
           ),
           mobile: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _getStatsCard(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _getStatsCard(),
+                const SizedBox(height: 16),
+                _getConfigCard(),
+              ],
+            ),
           ),
         ),
       ],
