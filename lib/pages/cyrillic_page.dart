@@ -14,43 +14,154 @@ class CyrillicPage extends StatelessWidget {
     FlashCardOptionSet(
       label: 'Cyrillic',
       flashCardOptions: [
-        FlashCardOption(answer: 'a', label: 'а'),
-        FlashCardOption(answer: 'b', label: 'б'),
-        FlashCardOption(answer: 'v', label: 'в'),
-        FlashCardOption(answer: 'g', label: 'г'),
-        FlashCardOption(answer: 'd', label: 'д'),
-        FlashCardOption(answer: 'e', label: 'е'),
-        FlashCardOption(answer: 'e', label: 'ё'),
-        FlashCardOption(answer: 'zh', label: 'ж'),
-        FlashCardOption(answer: 'z', label: 'з'),
-        FlashCardOption(answer: 'i', label: 'и'),
-        FlashCardOption(answer: 'i', label: 'i'),
-        FlashCardOption(answer: 'i', label: 'й'),
-        FlashCardOption(answer: 'k', label: 'к'),
-        FlashCardOption(answer: 'l', label: 'л'),
-        FlashCardOption(answer: 'm', label: 'м'),
-        FlashCardOption(answer: 'n', label: 'н'),
-        FlashCardOption(answer: 'o', label: 'о'),
-        FlashCardOption(answer: 'p', label: 'п'),
-        FlashCardOption(answer: 'r', label: 'р'),
-        FlashCardOption(answer: 's', label: 'с'),
-        FlashCardOption(answer: 't', label: 'т'),
-        FlashCardOption(answer: 'u', label: 'у'),
-        FlashCardOption(answer: 'f', label: 'ф'),
-        FlashCardOption(answer: 'kh', label: 'х'),
-        FlashCardOption(answer: 'ts', label: 'ц'),
-        FlashCardOption(answer: 'ch', label: 'ч'),
-        FlashCardOption(answer: 'sh', label: 'ш'),
-        FlashCardOption(answer: 'shch', label: 'щ'),
-        FlashCardOption(answer: '"', label: 'ъ'),
-        FlashCardOption(answer: 'y', label: 'ы'),
-        FlashCardOption(answer: '\'', label: 'ь'),
-        FlashCardOption(answer: 'ie', label: 'ѣ'),
-        FlashCardOption(answer: 'e', label: 'э'),
-        FlashCardOption(answer: 'iu', label: 'ю'),
-        FlashCardOption(answer: 'ia', label: 'я'),
-        FlashCardOption(answer: 'f', label: 'ѳ'),
-        FlashCardOption(answer: 'y', label: 'v'),
+        FlashCardOption(
+          label: 'а',
+          answers: ['a'],
+        ),
+        FlashCardOption(
+          label: 'б',
+          answers: ['b'],
+        ),
+        FlashCardOption(
+          label: 'в',
+          answers: ['v'],
+        ),
+        FlashCardOption(
+          label: 'г',
+          answers: ['g'],
+        ),
+        FlashCardOption(
+          label: 'д',
+          answers: ['d'],
+        ),
+        FlashCardOption(
+          label: 'е',
+          answers: ['e'],
+        ),
+        FlashCardOption(
+          label: 'ё',
+          answers: ['e'],
+        ),
+        FlashCardOption(
+          label: 'ж',
+          answers: ['zh'],
+        ),
+        FlashCardOption(
+          label: 'з',
+          answers: ['z'],
+        ),
+        FlashCardOption(
+          label: 'и',
+          answers: ['i'],
+        ),
+        FlashCardOption(
+          label: 'i',
+          answers: ['i'],
+        ),
+        FlashCardOption(
+          label: 'й',
+          answers: ['i'],
+        ),
+        FlashCardOption(
+          label: 'к',
+          answers: ['k'],
+        ),
+        FlashCardOption(
+          label: 'л',
+          answers: ['l'],
+        ),
+        FlashCardOption(
+          label: 'м',
+          answers: ['m'],
+        ),
+        FlashCardOption(
+          label: 'н',
+          answers: ['n'],
+        ),
+        FlashCardOption(
+          label: 'о',
+          answers: ['o'],
+        ),
+        FlashCardOption(
+          label: 'п',
+          answers: ['p'],
+        ),
+        FlashCardOption(
+          label: 'р',
+          answers: ['r'],
+        ),
+        FlashCardOption(
+          label: 'с',
+          answers: ['s'],
+        ),
+        FlashCardOption(
+          label: 'т',
+          answers: ['t'],
+        ),
+        FlashCardOption(
+          label: 'у',
+          answers: ['u'],
+        ),
+        FlashCardOption(
+          label: 'ф',
+          answers: ['f'],
+        ),
+        FlashCardOption(
+          label: 'х',
+          answers: ['kh'],
+        ),
+        FlashCardOption(
+          label: 'ц',
+          answers: ['ts'],
+        ),
+        FlashCardOption(
+          label: 'ч',
+          answers: ['ch'],
+        ),
+        FlashCardOption(
+          label: 'ш',
+          answers: ['sh'],
+        ),
+        FlashCardOption(
+          label: 'щ',
+          answers: ['shch'],
+        ),
+        FlashCardOption(
+          label: 'ъ',
+          answers: ['"'],
+        ),
+        FlashCardOption(
+          label: 'ы',
+          answers: ['y'],
+        ),
+        FlashCardOption(
+          label: 'ь',
+          answers: ['\''],
+        ),
+        FlashCardOption(
+          label: 'ѣ',
+          answers: ['ie'],
+        ),
+        FlashCardOption(
+          label: 'э',
+          answers: ['e'],
+        ),
+        FlashCardOption(
+          label: 'ю',
+          answers: ['iu', 'yu'],
+        ),
+        FlashCardOption(
+          label: 'я',
+          answers: ['ia', 'ya'],
+        ),
+        FlashCardOption(
+          label: 'ѳ',
+          answers: ['f'],
+        ),
+        FlashCardOption(
+          label: 'v',
+          answers: ['y'],
+        ),
       ],
     ),
   ];

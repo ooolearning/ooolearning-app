@@ -1,9 +1,9 @@
 class FlashCardOption {
   const FlashCardOption({
-    required this.answer,
+    required this.answers,
     required this.label,
   });
 
-  final String answer;
+  final List<String> answers;
   final String label;
 }

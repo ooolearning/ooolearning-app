@@ -14,32 +14,110 @@ class MorsePage extends StatelessWidget {
     FlashCardOptionSet(
       label: 'Morse',
       flashCardOptions: [
-        FlashCardOption(answer: 'a', label: '.-'),
-        FlashCardOption(answer: 'b', label: '-...'),
-        FlashCardOption(answer: 'c', label: '-.-.'),
-        FlashCardOption(answer: 'd', label: '-..'),
-        FlashCardOption(answer: 'e', label: '.'),
-        FlashCardOption(answer: 'f', label: '..-.'),
-        FlashCardOption(answer: 'g', label: '--.'),
-        FlashCardOption(answer: 'h', label: '....'),
-        FlashCardOption(answer: 'i', label: '..'),
-        FlashCardOption(answer: 'j', label: '.---'),
-        FlashCardOption(answer: 'k', label: '-.-'),
-        FlashCardOption(answer: 'l', label: '.-..'),
-        FlashCardOption(answer: 'm', label: '--'),
-        FlashCardOption(answer: 'n', label: '-.'),
-        FlashCardOption(answer: 'o', label: '---'),
-        FlashCardOption(answer: 'p', label: '.--.'),
-        FlashCardOption(answer: 'q', label: '--.-'),
-        FlashCardOption(answer: 'r', label: '.-.'),
-        FlashCardOption(answer: 's', label: '...'),
-        FlashCardOption(answer: 't', label: '-'),
-        FlashCardOption(answer: 'u', label: '..-'),
-        FlashCardOption(answer: 'v', label: '...-'),
-        FlashCardOption(answer: 'w', label: '.--'),
-        FlashCardOption(answer: 'x', label: '-..-'),
-        FlashCardOption(answer: 'y', label: '-.--'),
-        FlashCardOption(answer: 'z', label: '--..'),
+        FlashCardOption(
+          label: '.-',
+          answers: ['a'],
+        ),
+        FlashCardOption(
+          label: '-...',
+          answers: ['b'],
+        ),
+        FlashCardOption(
+          label: '-.-.',
+          answers: ['c'],
+        ),
+        FlashCardOption(
+          label: '-..',
+          answers: ['d'],
+        ),
+        FlashCardOption(
+          label: '.',
+          answers: ['e'],
+        ),
+        FlashCardOption(
+          label: '..-.',
+          answers: ['f'],
+        ),
+        FlashCardOption(
+          label: '--.',
+          answers: ['g'],
+        ),
+        FlashCardOption(
+          label: '....',
+          answers: ['h'],
+        ),
+        FlashCardOption(
+          label: '..',
+          answers: ['i'],
+        ),
+        FlashCardOption(
+          label: '.---',
+          answers: ['j'],
+        ),
+        FlashCardOption(
+          label: '-.-',
+          answers: ['k'],
+        ),
+        FlashCardOption(
+          label: '.-..',
+          answers: ['l'],
+        ),
+        FlashCardOption(
+          label: '--',
+          answers: ['m'],
+        ),
+        FlashCardOption(
+          label: '-.',
+          answers: ['n'],
+        ),
+        FlashCardOption(
+          label: '---',
+          answers: ['o'],
+        ),
+        FlashCardOption(
+          label: '.--.',
+          answers: ['p'],
+        ),
+        FlashCardOption(
+          label: '--.-',
+          answers: ['q'],
+        ),
+        FlashCardOption(
+          label: '.-.',
+          answers: ['r'],
+        ),
+        FlashCardOption(
+          label: '...',
+          answers: ['s'],
+        ),
+        FlashCardOption(
+          label: '-',
+          answers: ['t'],
+        ),
+        FlashCardOption(
+          label: '..-',
+          answers: ['u'],
+        ),
+        FlashCardOption(
+          label: '...-',
+          answers: ['v'],
+        ),
+        FlashCardOption(
+          label: '.--',
+          answers: ['w'],
+        ),
+        FlashCardOption(
+          label: '-..-',
+          answers: ['x'],
+        ),
+        FlashCardOption(
+          label: '-.--',
+          answers: ['y'],
+        ),
+        FlashCardOption(
+          label: '--..',
+          answers: ['z'],
+        ),
       ],
     ),
   ];

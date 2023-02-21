@@ -141,7 +141,9 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                             validator: (value) {
                               value ??= '';
 
-                              if (value.toLowerCase() != _currentCard?.answer) {
+                              if (_currentCard?.answers
+                                      .contains(value.toLowerCase()) ==
+                                  false) {
                                 return 'Try again!';
                               }
 
