@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -21,10 +22,15 @@ class FlashCardsModule extends StatefulWidget {
 class _FlashCardsModuleState extends State<FlashCardsModule> {
   FlashCardOption? _current;
 
+  final _random = Random();
+
+  final _queue = ListQueue<FlashCardOption>();
+
   final _stats = FlashCardsStats(
     totalAnswers: 0,
     correctAnswers: 0,
     wrongAnswers: 0,
+    cardsSkipped: 0,
   );
 
   final _correctAudioPlayer = AudioPlayer();
@@ -35,12 +41,19 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
 
   final _formKey = GlobalKey<FormState>();
 
-  void _shuffleFlashCard() {
-    final rand = Random().nextInt(widget.flashCardOptions.length);
+  void _nextFlashCard() {
+    final newFlashCard = _queue.removeFirst();
+
+    _queue.addLast(_pickRandomFlashCard());
 
     setState(() {
-      _current = widget.flashCardOptions.elementAt(rand);
+      _current = newFlashCard;
     });
+  }
+
+  FlashCardOption _pickRandomFlashCard() {
+    return widget.flashCardOptions
+        .elementAt(_random.nextInt(widget.flashCardOptions.length));
   }
 
   void _validate() {
@@ -52,7 +65,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
     }
 
     if (_formKey.currentState?.validate() == true) {
-      _shuffleFlashCard();
+      _nextFlashCard();
 
       _correctAudioPlayer.seek(Duration.zero);
       _correctAudioPlayer.resume();
@@ -79,7 +92,15 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
   void initState() {
     super.initState();
 
-    _shuffleFlashCard();
+    _queue.addAll([
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+      _pickRandomFlashCard(),
+    ]);
+
+    _nextFlashCard();
 
     Future(() async {
       await Future.wait(
@@ -100,15 +121,16 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
 
   @override
   Widget build(BuildContext context) {
+    final totalAnswers = _stats.totalAnswers == 0 ? 1 : _stats.totalAnswers;
+
     final correctAnswersPercentage =
-        (_stats.correctAnswers * 100 / _stats.totalAnswers)
+        (_stats.correctAnswers * 100 / totalAnswers)
             .toStringAsFixed(2)
             .replaceAll(RegExp(r'\.'), ',');
 
-    final wrongAnswersPercentage =
-        (_stats.wrongAnswers * 100 / _stats.totalAnswers)
-            .toStringAsFixed(2)
-            .replaceAll(RegExp(r'\.'), ',');
+    final wrongAnswersPercentage = (_stats.wrongAnswers * 100 / totalAnswers)
+        .toStringAsFixed(2)
+        .replaceAll(RegExp(r'\.'), ',');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -127,11 +149,51 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                       margin: EdgeInsets.zero,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
-                        child: Center(
-                          child: Text(
-                            _current?.label ?? '',
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  _current?.label ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Next up',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: _queue
+                                  .toList()
+                                  .asMap()
+                                  .map((key, value) {
+                                    final text = Text(
+                                      value.label,
+                                      textAlign: TextAlign.center,
+                                      style: key == 0
+                                          ? const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            )
+                                          : null,
+                                    );
+
+                                    final newValue = Expanded(
+                                      child: key == 0
+                                          ? CircleAvatar(child: text)
+                                          : text,
+                                    );
+
+                                    return MapEntry(key, newValue);
+                                  })
+                                  .values
+                                  .toList(),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -154,9 +216,15 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 IconButton(
-                                  tooltip: 'Shuffle',
-                                  icon: const Icon(Icons.refresh),
-                                  onPressed: _shuffleFlashCard,
+                                  tooltip: 'Skip',
+                                  icon: const Icon(Icons.skip_next),
+                                  onPressed: () {
+                                    _nextFlashCard();
+
+                                    setState(() {
+                                      _stats.cardsSkipped++;
+                                    });
+                                  },
                                 ),
                               ],
                             ),
@@ -253,6 +321,13 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                           subtitle: Text('($wrongAnswersPercentage%)'),
                           trailing: Text(
                             _stats.wrongAnswers.toStringAsFixed(0),
+                          ),
+                        ),
+                        const Divider(height: 0),
+                        ListTile(
+                          title: const Text('Cards skipped'),
+                          trailing: Text(
+                            _stats.cardsSkipped.toStringAsFixed(0),
                           ),
                         ),
                       ],

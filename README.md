@@ -6,6 +6,8 @@
 
  `docker run -p 80:80 ooolearning-app`
 
+ `flutter pub run flutter_launcher_icons`
+
 ## Resources
 
 // TODO: add to the app's credits
