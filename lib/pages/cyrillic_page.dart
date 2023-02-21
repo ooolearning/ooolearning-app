@@ -12,7 +12,7 @@ class CyrillicPage extends StatelessWidget {
 
   final _flashCardOptionSets = const <FlashCardOptionSet>[
     FlashCardOptionSet(
-      label: 'Cyrillic',
+      label: 'Russian',
       flashCardOptions: [
         FlashCardOption(
           label: 'а',
@@ -36,11 +36,152 @@ class CyrillicPage extends StatelessWidget {
         ),
         FlashCardOption(
           label: 'е',
-          answers: ['e'],
+          answers: ['ye', 'je', 'e'],
         ),
         FlashCardOption(
           label: 'ё',
+          answers: ['yo', 'jo', 'ë'],
+        ),
+        FlashCardOption(
+          label: 'ж',
+          answers: ['zh', 'ž'],
+        ),
+        FlashCardOption(
+          label: 'з',
+          answers: ['z'],
+        ),
+        FlashCardOption(
+          label: 'и',
+          answers: ['i'],
+        ),
+        FlashCardOption(
+          label: 'й',
+          answers: ['y', 'i', 'j'],
+        ),
+        FlashCardOption(
+          label: 'к',
+          answers: ['k'],
+        ),
+        FlashCardOption(
+          label: 'л',
+          answers: ['l'],
+        ),
+        FlashCardOption(
+          label: 'м',
+          answers: ['m'],
+        ),
+        FlashCardOption(
+          label: 'н',
+          answers: ['n'],
+        ),
+        FlashCardOption(
+          label: 'о',
+          answers: ['o'],
+        ),
+        FlashCardOption(
+          label: 'п',
+          answers: ['p'],
+        ),
+        FlashCardOption(
+          label: 'р',
+          answers: ['r'],
+        ),
+        FlashCardOption(
+          label: 'с',
+          answers: ['s'],
+        ),
+        FlashCardOption(
+          label: 'т',
+          answers: ['t'],
+        ),
+        FlashCardOption(
+          label: 'у',
+          answers: ['u'],
+        ),
+        FlashCardOption(
+          label: 'ф',
+          answers: ['f'],
+        ),
+        FlashCardOption(
+          label: 'х',
+          answers: ['kh', 'h'],
+        ),
+        FlashCardOption(
+          label: 'ц',
+          answers: ['ts', 'c'],
+        ),
+        FlashCardOption(
+          label: 'ч',
+          answers: ['ch', 'č'],
+        ),
+        FlashCardOption(
+          label: 'ш',
+          answers: ['sh', 'š'],
+        ),
+        FlashCardOption(
+          label: 'щ',
+          answers: ['shch', 'sch', 'šč'],
+        ),
+        FlashCardOption(
+          label: 'ъ',
+          answers: ['"'],
+        ),
+        FlashCardOption(
+          label: 'ы',
+          answers: ['y'],
+        ),
+        FlashCardOption(
+          label: 'ь',
+          answers: ['\''],
+        ),
+        FlashCardOption(
+          label: 'э',
+          answers: ['e', 'è'],
+        ),
+        FlashCardOption(
+          label: 'ю',
+          answers: ['yu', 'ju'],
+        ),
+        FlashCardOption(
+          label: 'я',
+          answers: ['ya', 'ja'],
+        ),
+      ],
+    ),
+    FlashCardOptionSet(
+      label: 'Ukrainian',
+      flashCardOptions: [
+        FlashCardOption(
+          label: 'а',
+          answers: ['a'],
+        ),
+        FlashCardOption(
+          label: 'б',
+          answers: ['b'],
+        ),
+        FlashCardOption(
+          label: 'в',
+          answers: ['v'],
+        ),
+        FlashCardOption(
+          label: 'г',
+          answers: ['h'],
+        ),
+        FlashCardOption(
+          label: 'ґ',
+          answers: ['g'],
+        ),
+        FlashCardOption(
+          label: 'д',
+          answers: ['d'],
+        ),
+        FlashCardOption(
+          label: 'е',
           answers: ['e'],
+        ),
+        FlashCardOption(
+          label: 'є',
+          answers: ['ye', 'ie'],
         ),
         FlashCardOption(
           label: 'ж',
@@ -52,15 +193,19 @@ class CyrillicPage extends StatelessWidget {
         ),
         FlashCardOption(
           label: 'и',
-          answers: ['i'],
+          answers: ['y'],
         ),
         FlashCardOption(
           label: 'i',
           answers: ['i'],
         ),
         FlashCardOption(
+          label: 'ї',
+          answers: ['yi', 'i'],
+        ),
+        FlashCardOption(
           label: 'й',
-          answers: ['i'],
+          answers: ['y', 'i'],
         ),
         FlashCardOption(
           label: 'к',
@@ -127,40 +272,20 @@ class CyrillicPage extends StatelessWidget {
           answers: ['shch'],
         ),
         FlashCardOption(
-          label: 'ъ',
-          answers: ['"'],
-        ),
-        FlashCardOption(
-          label: 'ы',
-          answers: ['y'],
-        ),
-        FlashCardOption(
           label: 'ь',
           answers: ['\''],
         ),
         FlashCardOption(
-          label: 'ѣ',
-          answers: ['ie'],
-        ),
-        FlashCardOption(
-          label: 'э',
-          answers: ['e'],
-        ),
-        FlashCardOption(
           label: 'ю',
-          answers: ['iu', 'yu'],
+          answers: ['yu', 'iu'],
         ),
         FlashCardOption(
           label: 'я',
-          answers: ['ia', 'ya'],
+          answers: ['ya', 'ia'],
         ),
         FlashCardOption(
-          label: 'ѳ',
-          answers: ['f'],
-        ),
-        FlashCardOption(
-          label: 'v',
-          answers: ['y'],
+          label: '\'',
+          answers: ['"'],
         ),
       ],
     ),

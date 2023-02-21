@@ -79,7 +79,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
               if (value.label == _currentSet?.label) {
                 child = ElevatedButton(
                   onPressed: null,
-                  child: Text(value.label),
+                  child: Text('${value.label} (selected)'),
                 );
               }
 
@@ -177,6 +177,11 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text(
+              _currentSet?.label ?? '',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 16),
             Expanded(
               child: Center(
                 child: Text(
