@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ooolearning_app/pages/home_page.dart';
 import 'package:ooolearning_app/utils/constants.dart';
 import 'package:ooolearning_app/widgets/app_title.dart';
+import 'package:ooolearning_app/widgets/theme_expansion_tile.dart';
 
 class BasePage extends StatelessWidget {
   const BasePage({
@@ -47,6 +48,8 @@ class BasePage extends StatelessWidget {
                       : null,
                 );
               }),
+              const Divider(height: 0),
+              const ThemeExpansionTile(),
               const Divider(height: 0),
               Padding(
                 padding: const EdgeInsets.all(16),

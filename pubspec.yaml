@@ -15,6 +15,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dyn_mouse_scroll: ^1.0.7
   audioplayers: ^3.0.1
+  shared_preferences: ^2.0.17
+  flutter_bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:

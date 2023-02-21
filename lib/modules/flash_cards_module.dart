@@ -133,7 +133,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                             controller: _controller,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.grey.shade100,
+                              fillColor: Theme.of(context).hoverColor,
                             ),
                             onFieldSubmitted: (value) {
                               _validate();
