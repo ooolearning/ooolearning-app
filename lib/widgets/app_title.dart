@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ooolearning_app/utils/constants.dart';
-import 'package:ooolearning_app/utils/images.dart';
+import 'package:ooolearning_app/utils/assets.dart';
 
 class AppTitle extends StatelessWidget {
   const AppTitle({super.key});
@@ -14,7 +14,7 @@ class AppTitle extends StatelessWidget {
         SizedBox(
           height: 24,
           width: 24,
-          child: Image.asset(Images.oooLearning),
+          child: Image.asset(ImageAssets.oooLearning),
         ),
         const SizedBox(width: 8),
         const Text(Constants.appName),
