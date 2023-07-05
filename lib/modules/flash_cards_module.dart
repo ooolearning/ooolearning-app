@@ -316,6 +316,20 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
     });
   }
 
+  Future<void> _initAudioContextAndRun(Future Function() computation) async {
+    if (_correctAudioPlayer.source == null ||
+        _wrongAudioPlayer.source == null) {
+      await Future.wait(
+        [
+          _correctAudioPlayer.setSource(AssetSource(AudioAssets.correct)),
+          _wrongAudioPlayer.setSource(AssetSource(AudioAssets.wrong)),
+        ],
+      );
+    }
+
+    await computation();
+  }
+
   void _nextFlashCard() {
     final newFlashCard = _cardQueue.removeFirst();
 
@@ -367,8 +381,10 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
     if (_formKey.currentState?.validate() == true) {
       _nextFlashCard();
 
-      _correctAudioPlayer.seek(Duration.zero);
-      _correctAudioPlayer.resume();
+      _initAudioContextAndRun(() async {
+        await _correctAudioPlayer.seek(Duration.zero);
+        await _correctAudioPlayer.resume();
+      });
 
       setState(() {
         _stats.totalAnswers++;
@@ -377,8 +393,10 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
 
       _hideTip();
     } else {
-      _wrongAudioPlayer.seek(Duration.zero);
-      _wrongAudioPlayer.resume();
+      _initAudioContextAndRun(() async {
+        await _wrongAudioPlayer.seek(Duration.zero);
+        await _wrongAudioPlayer.resume();
+      });
 
       setState(() {
         _stats.totalAnswers++;
@@ -403,13 +421,6 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
         [
           _correctAudioPlayer.audioCache.clearAll(),
           _wrongAudioPlayer.audioCache.clearAll(),
-        ],
-      );
-
-      await Future.wait(
-        [
-          _correctAudioPlayer.setSource(AssetSource(AudioAssets.correct)),
-          _wrongAudioPlayer.setSource(AssetSource(AudioAssets.wrong)),
         ],
       );
     });
