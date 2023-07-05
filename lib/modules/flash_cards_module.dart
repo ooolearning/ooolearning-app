@@ -114,10 +114,6 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                 setState(() {
                   _doShowTips = value;
                 });
-
-                if (value == false) {
-                  _hideTip();
-                }
               }),
         ],
       ),
@@ -195,7 +191,7 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
                   ),
                 ),
               ),
-              if (_isTipShown) ...[
+              if (_doShowTips && _isTipShown) ...[
                 const SizedBox(width: 16),
                 Text(
                   'Correct answer: ${(_currentCard?.answers ?? []).join(', ')}',
