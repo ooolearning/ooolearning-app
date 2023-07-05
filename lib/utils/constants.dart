@@ -1,5 +1,6 @@
 import 'package:ooolearning_app/models/menu_option.dart';
 import 'package:ooolearning_app/pages/cyrillic_page.dart';
+import 'package:ooolearning_app/pages/japanese_page.dart';
 import 'package:ooolearning_app/pages/morse_page.dart';
 
 class Constants {
@@ -17,9 +18,9 @@ class Constants {
       isEnabled: true,
     ),
     MenuOption(
-      label: 'Japanese (soon)',
-      route: '',
-      isEnabled: false,
+      label: 'Japanese',
+      route: JapanesePage.route,
+      isEnabled: true,
     ),
     MenuOption(
       label: 'Morse',
