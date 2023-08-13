@@ -6,6 +6,7 @@ import 'package:ooolearning_app/core/bloc_providers.dart';
 import 'package:ooolearning_app/core/repository_providers.dart';
 import 'package:ooolearning_app/pages/cyrillic_page.dart';
 import 'package:ooolearning_app/pages/home_page.dart';
+import 'package:ooolearning_app/pages/japanese_words_page.dart';
 import 'package:ooolearning_app/pages/japanese_page.dart';
 import 'package:ooolearning_app/pages/morse_page.dart';
 import 'package:ooolearning_app/utils/constants.dart';
@@ -38,6 +39,9 @@ class App extends StatelessWidget {
               routes: {
                 // Home page.
                 HomePage.route: (context) => const HomePage(),
+
+                // Word quiz pages.
+                JapaneseWordsPage.route: (context) => const JapaneseWordsPage(),
 
                 // Flash card pages.
                 CyrillicPage.route: (context) => const CyrillicPage(),

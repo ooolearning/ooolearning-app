@@ -83,13 +83,13 @@ class HomePage extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                    const Card(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: const [
+                          children: [
                             Text('Welcome to ${Constants.appName}!'),
                           ],
                         ),

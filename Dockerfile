@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as builder
+FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -16,8 +16,8 @@ WORKDIR /usr/local/flutter
 
 RUN flutter channel master
 
-# RUN flutter upgrade
-RUN git checkout f9972818f4e8bf464b378f0942a153fa391a0b7a
+RUN flutter upgrade
+# RUN git checkout f9972818f4e8bf464b378f0942a153fa391a0b7a
 
 RUN flutter config --enable-web
 
@@ -30,12 +30,10 @@ RUN flutter pub get
 # Build the Flutter application for the web
 RUN flutter build web --release
 
-FROM nginx:alpine as runner
+FROM nginx:alpine AS runner
 
 COPY --from=builder /app/build/web /app/static
 
 RUN chmod -R 777 /app/static
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
