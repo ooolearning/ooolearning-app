@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ooolearning_app/blocs/theme/theme_bloc.dart';
+import 'package:ooolearning_app/blocs/word_set/word_set_bloc.dart';
 import 'package:ooolearning_app/repositories/theme_repository.dart';
+import 'package:ooolearning_app/repositories/word_set_repository.dart';
 
 class BlocProviders extends StatelessWidget {
   const BlocProviders({
@@ -18,6 +20,12 @@ class BlocProviders extends StatelessWidget {
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(
             themeRepository: RepositoryProvider.of<ThemeRepository>(context),
+          ),
+        ),
+        BlocProvider<WordSetBloc>(
+          create: (context) => WordSetBloc(
+            wordSetRepository:
+                RepositoryProvider.of<WordSetRepository>(context),
           ),
         ),
       ],

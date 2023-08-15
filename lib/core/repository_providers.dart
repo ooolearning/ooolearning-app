@@ -4,6 +4,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'package:ooolearning_app/interceptors/auth_interceptor.dart';
 import 'package:ooolearning_app/repositories/theme_repository.dart';
 import 'package:ooolearning_app/repositories/translation_repository.dart';
+import 'package:ooolearning_app/repositories/word_set_repository.dart';
 import 'package:ooolearning_app/utils/api.dart';
 
 class RepositoryProviders extends StatelessWidget {
@@ -14,6 +15,7 @@ class RepositoryProviders extends StatelessWidget {
 
   final Widget child;
 
+  // TODO: fix, api
   final _translationApi = Api(
     authority: '',
     client: InterceptedClient.build(interceptors: [
@@ -30,6 +32,9 @@ class RepositoryProviders extends StatelessWidget {
         ),
         RepositoryProvider<TranslationRepository>(
           create: (context) => TranslationRepository(api: _translationApi),
+        ),
+        RepositoryProvider<WordSetRepository>(
+          create: (context) => WordSetRepository(),
         ),
       ],
       child: child,

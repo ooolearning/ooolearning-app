@@ -10,7 +10,7 @@ class TranslationBloc extends Bloc<TranslationEvent, TranslationState> {
       try {
         final res = await translationRepository.translate(text: event.text);
 
-        emit(TranslateTextDoneState(text: res.toString()));
+        emit(TranslateTextDoneState(text: res[0]));
       } catch (e) {
         emit(TranslateTextErrorState(message: e.toString()));
       }

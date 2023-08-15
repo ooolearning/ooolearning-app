@@ -104,17 +104,18 @@ class _FlashCardsModuleState extends State<FlashCardsModule> {
             child: Text('Options'),
           ),
           CheckboxListTile(
-              value: _doShowTips,
-              title: const Text('Show tips'),
-              onChanged: (value) {
-                if (value == null) {
-                  return;
-                }
+            value: _doShowTips,
+            title: const Text('Show tips'),
+            onChanged: (value) {
+              if (value == null) {
+                return;
+              }
 
-                setState(() {
-                  _doShowTips = value;
-                });
-              }),
+              setState(() {
+                _doShowTips = value;
+              });
+            },
+          ),
         ],
       ),
     );
