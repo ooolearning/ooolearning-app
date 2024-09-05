@@ -5,21 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ooolearning-app",
+      "name": "Launch Package",
+      "type": "go",
       "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "ooolearning-app (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "ooolearning-app (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
+      "mode": "auto",
+      "program": "${workspaceFolder}/data-parser"
     }
   ]
 }

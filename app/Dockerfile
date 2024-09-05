@@ -17,7 +17,6 @@ WORKDIR /usr/local/flutter
 RUN flutter channel master
 
 RUN flutter upgrade
-# RUN git checkout f9972818f4e8bf464b378f0942a153fa391a0b7a
 
 RUN flutter config --enable-web
 
@@ -27,7 +26,6 @@ COPY . .
 
 RUN flutter pub get
 
-# Build the Flutter application for the web
 RUN flutter build web --release
 
 FROM nginx:alpine AS runner
