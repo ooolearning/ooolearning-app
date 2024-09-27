@@ -1,6 +1,9 @@
 package main
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 // JM.
 
@@ -69,9 +72,31 @@ type TableRow struct {
 // App.
 
 type AppEntry struct {
+	Frequency       int64
 	Id              string
 	ReadingElements []AppReadingElement
 	Senses          []AppSense
+}
+
+func (e *AppEntry) String() string {
+	mainGlossary := ""
+	mainType := ""
+	mainValue := ""
+
+	for _, v := range e.ReadingElements {
+		mainType = v.Type
+		mainValue = v.Value
+	}
+
+outer:
+	for _, v := range e.Senses {
+		for _, v := range v.Glossaries {
+			mainGlossary = v
+			break outer
+		}
+	}
+
+	return fmt.Sprintf("%s [%s] - %s", mainType, mainValue, mainGlossary)
 }
 
 type AppReadingElement struct {
@@ -81,6 +106,6 @@ type AppReadingElement struct {
 }
 
 type AppSense struct {
-	Glossary     string
+	Glossaries   []string
 	PartOfSpeech string
 }

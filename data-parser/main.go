@@ -8,7 +8,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -116,7 +118,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	appEntries := []AppEntry{}
+	appEntries := []*AppEntry{}
 	for _, jmEntry := range jmDoc.Entries {
 		readingElements := []AppReadingElement{}
 
@@ -136,19 +138,50 @@ func main() {
 
 		senses := []AppSense{}
 		for _, jmSense := range jmEntry.Sense {
+			glossaries := []string{}
+			for _, jmGloss := range jmSense.Gloss {
+				glossaries = append(glossaries, jmGloss.Value)
+			}
+
 			senses = append(senses, AppSense{
-				PartOfSpeech: posMap[jmSense.Pos[1:len(jmSense.Pos)-1]],
+				Glossaries:   glossaries,
+				PartOfSpeech: jmSense.Pos[1 : len(jmSense.Pos)-1],
 			})
 		}
 
-		appEntries = append(appEntries, AppEntry{
+		appEntries = append(appEntries, &AppEntry{
 			Id:              fmt.Sprintf("%d", jmEntry.EntSeq),
 			ReadingElements: readingElements,
 			Senses:          senses,
 		})
 	}
 
-	print(len(appEntries))
+	appNounEntries := []*AppEntry{}
+	for _, v := range appEntries {
+		for _, v2 := range v.Senses {
+			if v2.PartOfSpeech == "n" {
+				appNounEntries = append(appEntries, v)
+				break
+			}
+		}
+	}
+
+	// for _, v := range appNounEntries[:100] {
+	// 	log.Println(v)
+	// }
+
+	a := map[string]*[]*AppEntry{}
+	for _, v := range appNounEntries {
+		if len(v.ReadingElements) == 0 {
+			continue
+		}
+
+		if a[v.ReadingElements[0].Value] == nil {
+			a[v.ReadingElements[0].Value] = &[]*AppEntry{}
+		}
+
+		*a[v.ReadingElements[0].Value] = append(*a[v.ReadingElements[0].Value], v)
+	}
 
 	content, err := getPageContent()
 	if err != nil {
@@ -161,6 +194,21 @@ func main() {
 	}
 
 	print(rows)
+
+	for _, v := range rows {
+		if a[v.Lemma] != nil {
+			log.Printf("found %s", v.Lemma)
+
+			for _, v2 := range *a[v.Lemma] {
+				val, err := strconv.ParseInt(v.Occurrences, 10, 64)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				v2.Frequency = val
+			}
+		}
+	}
 }
 
 func getPageContent() (string, error) {
@@ -181,7 +229,9 @@ func getPageContent() (string, error) {
 }
 
 func parseJMContent() (*JMDict, error) {
-	data, err := os.ReadFile("./resources/test.xml")
+	then := time.Now().UnixMilli()
+
+	data, err := os.ReadFile("./resources/full.xml")
 	if err != nil {
 		return nil, err
 	}
@@ -194,6 +244,8 @@ func parseJMContent() (*JMDict, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	log.Printf("parseJMContent: %d ms", time.Now().UnixMilli()-then)
 
 	return doc, nil
 }
